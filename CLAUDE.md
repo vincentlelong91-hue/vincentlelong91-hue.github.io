@@ -37,6 +37,7 @@ Everything lives in one file: `index.html`. It has three major sections:
 | s18 | Classement | Global leaderboard |
 | s19 | Spots favoris | Saved spots from `FAVS` set |
 | s20 | Proposer un spot | Crowd-sourced spot suggestion form |
+| s21 | Mon Challenge Entreprise | Corporate dashboard (active members, ongoing missions, rank, points, completed challenges); reached after entering a valid company code or via the map banner; "Voir le classement complet" → s5 |
 
 ### Navigation engine
 
@@ -69,7 +70,7 @@ The bottom nav bar (with active-state styling) is duplicated inside each tab scr
 
 ### State & persistence
 
-- **`localStorage`**: only `aggoFavSpots` (JSON array of spot indices in the `SPOTS` array). Loaded into a `Set` called `FAVS` at startup.
+- **`localStorage`**: `aggoFavSpots` (JSON array of spot indices in the `SPOTS` array, loaded into a `Set` called `FAVS` at startup) and `aggoEntrUnlocked` (`'1'` once a valid company code has unlocked the Challenge Entreprise — see `ENTR_VALID` / `entrUnlocked`; gates access to s5/s21).
 - No other persistent state — all other UI state (filters, session fav, etc.) resets on page reload.
 - Login (`loginCheck`) only checks that fields are non-empty; there is no real auth.
 

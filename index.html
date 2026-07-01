@@ -111,6 +111,27 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
 .splash-mark{width:90px;height:90px;background:var(--lime);border-radius:22px;
               display:flex;align-items:center;justify-content:center;overflow:hidden;}
 
+/* ===== SPLASH: ANIMATION D'OUVERTURE ===== */
+@keyframes splashReveal{from{clip-path:circle(0% at 50% 42%)}to{clip-path:circle(150% at 50% 42%)}}
+@keyframes splashLogoIn{
+  0%{opacity:0;transform:scale(.55) translateY(10px);filter:blur(7px)}
+  60%{opacity:1}
+  100%{opacity:1;transform:scale(1) translateY(0);filter:blur(0)}
+}
+@keyframes splashGlow{0%{filter:drop-shadow(0 0 0 rgba(255,255,255,0))}45%{filter:drop-shadow(0 0 22px rgba(255,255,255,.85))}100%{filter:drop-shadow(0 0 0 rgba(255,255,255,0))}}
+@keyframes splashFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes splashUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+#s0 .splash-bg{animation:splashReveal .8s cubic-bezier(.4,0,.2,1) both;}
+#s0 .splash-content img{animation:splashLogoIn .75s cubic-bezier(.34,1.56,.64,1) .35s both, splashGlow 1.1s ease-out .9s 1, splashFloat 3.4s ease-in-out 1.7s infinite;}
+#s0 .splash-tagline{animation:splashUp .5s ease-out .85s both;}
+#s0 .splash-content>div:last-child>*{animation:splashUp .55s cubic-bezier(.34,1.4,.64,1) both;}
+#s0 .splash-content>div:last-child>*:nth-child(1){animation-delay:1s;}
+#s0 .splash-content>div:last-child>*:nth-child(2){animation-delay:1.12s;}
+#s0 .splash-content>div:last-child>*:nth-child(3){animation-delay:1.24s;}
+@media (prefers-reduced-motion:reduce){
+  #s0 .splash-bg,#s0 .splash-content img,#s0 .splash-tagline,#s0 .splash-content>div:last-child>*{animation:none!important;}
+}
+
 /* ===== CARTE ===== */
 .map-wrap{position:absolute;inset:0;z-index:1;}
 #mapbox{height:100%;width:100%;}
@@ -293,7 +314,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
 .ecode-hint{font-size:11px;color:var(--g3);text-align:center;line-height:1.45;margin-top:14px;}
 
 /* ===== BANDEAU "CHALLENGE REJOINT" (carte) ===== */
-.ejoin-banner{position:absolute;top:150px;left:14px;right:14px;z-index:350;
+.ejoin-banner{position:absolute;top:166px;left:14px;right:14px;z-index:350;
               background:#fff;border-radius:16px;box-shadow:0 8px 28px rgba(0,0,0,.16);
               padding:11px 12px;display:none;align-items:center;gap:11px;
               border-left:4px solid var(--pink);
@@ -516,7 +537,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
             <div class="search-results" id="searchResults"></div>
           </div>
           <div class="hdr-fav" onclick="openFavorites()">
-            <svg width="21" height="21" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.3C.6 8.5 2.2 5 5.6 5c2 0 3.4 1.2 4.4 2.6C11 6.2 12.4 5 14.4 5c3.4 0 5 3.5 3.6 6.7C19.5 16.4 12 21 12 21z" fill="#FF2CB5"/></svg>
+            <svg width="21" height="21" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FF2CB5"/></svg>
           </div>
         </div>
         <div class="filter-bar">
@@ -611,6 +632,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
       <div class="sf-pill" id="sf-fav" onclick="toggleSFFav(this)">🤍 Favoris</div>
     </div>
     <div style="height:12px"></div>
+    <div id="liveSessions"></div>
     <div class="session-card scard2" onclick="openSession('football')" data-sport="football" data-date="today" data-dist="1.2" data-level="intermédiaire" data-fav="1">
       <div class="scard2-img" data-stk-bg="football" style="background:#e8f8e8"></div>
       <div class="scard2-info">
@@ -1045,7 +1067,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
     <div style="margin:14px 16px;padding:14px 16px;background:#000;color:#fff;border-radius:16px;display:flex;align-items:center;gap:12px">
       <div class="lbrank" style="color:var(--lime);width:auto;font-size:16px">#12</div>
       <div class="fav" style="background:var(--lime);color:#000;width:38px;height:38px;font-size:13px">LM</div>
-      <div style="flex:1"><div style="font-size:14px;font-weight:800">Lucas Marchand</div><div style="font-size:11px;opacity:.7">Rang Argent · 1 240 pts</div></div>
+      <div style="flex:1"><div id="entr_myname" style="font-size:14px;font-weight:800">Lucas Marchand</div><div style="font-size:11px;opacity:.7">Rang Argent · 1 240 pts</div></div>
       <div style="font-size:11px;text-align:right;opacity:.8">+3 places<br>cette semaine ↗</div>
     </div>
     <div style="height:30px"></div>
@@ -1224,7 +1246,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
   <div class="scroll">
     <div class="sd-img" id="sd-img" style="background:linear-gradient(135deg,#d4f0d4,#a8e0a8)"><span id="sd-emoji">⚽</span>
       <div class="sd-back" onclick="back()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="#000" stroke-width="2.5" stroke-linecap="round"/></svg></div>
-      <div class="sd-fav" id="sd-fav" onclick="event.stopPropagation();toggleSessFav6()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-10-9.3C.6 8.5 2.2 5 5.6 5c2 0 3.4 1.2 4.4 2.6C11 6.2 12.4 5 14.4 5c3.4 0 5 3.5 3.6 6.7C19.5 16.4 12 21 12 21z" stroke="#000" stroke-width="2"/></svg></div>
+      <div class="sd-fav" id="sd-fav" onclick="event.stopPropagation();toggleSessFav6()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#000" stroke-width="2"/></svg></div>
       <div style="position:absolute;bottom:16px;right:16px"><div class="chip" id="sd-players-chip" style="background:var(--lime);color:#000">7 / 10 joueurs</div></div>
     </div>
     <div class="sd-body">
@@ -1275,22 +1297,22 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
       </div>
 
       <div class="cs-label">Nom de la session</div>
-      <input class="cs-input" type="text" placeholder="Ex : Football 5v5 entre amis">
+      <input class="cs-input" type="text" id="cs_name" placeholder="Ex : Football 5v5 entre amis">
 
       <div class="cs-label">Lieu</div>
       <div style="position:relative">
-        <input class="cs-input" type="text" placeholder="Rechercher un terrain à Bordeaux" style="padding-left:42px">
+        <input class="cs-input" type="text" id="cs_lieu" placeholder="Rechercher un terrain à Bordeaux" style="padding-left:42px">
         <div style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px">📍</div>
       </div>
 
       <div class="cs-row2">
         <div>
           <div class="cs-label">Date</div>
-          <input class="cs-input" type="date" value="2026-06-05" style="color:#000">
+          <input class="cs-input" type="date" id="cs_date" value="2026-06-05" style="color:#000">
         </div>
         <div>
           <div class="cs-label">Heure</div>
-          <input class="cs-input" type="time" value="18:00" style="color:#000">
+          <input class="cs-input" type="time" id="cs_time" value="18:00" style="color:#000">
         </div>
       </div>
 
@@ -1326,7 +1348,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
       <div class="cs-label">Description</div>
       <textarea class="cs-textarea" placeholder="Décris ta session, le niveau attendu, le matériel à prévoir…"></textarea>
 
-      <button class="btn" style="width:100%;height:56px;font-size:17px;font-weight:800;background:#FF2CB5;color:#fff;margin-top:24px" onclick="createSession()">Créer la session 🚀</button>
+      <button class="btn" id="cs_submit" style="width:100%;height:56px;font-size:17px;font-weight:800;background:#FF2CB5;color:#fff;margin-top:24px" onclick="createSession()">Créer la session 🚀</button>
       <div style="height:30px"></div>
     </div>
   </div>
@@ -1345,7 +1367,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
         </div>
         <div style="font-size:13px;font-weight:600;opacity:.9;flex:1">Équipement en accès libre</div>
       </div>
-      <div class="sp-favbtn" id="sp-favbtn" onclick="event.stopPropagation();toggleFavSpot()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-10-9.3C.6 8.5 2.2 5 5.6 5c2 0 3.4 1.2 4.4 2.6C11 6.2 12.4 5 14.4 5c3.4 0 5 3.5 3.6 6.7C19.5 16.4 12 21 12 21z" stroke="#fff" stroke-width="2"/></svg></div>
+      <div class="sp-favbtn" id="sp-favbtn" onclick="event.stopPropagation();toggleFavSpot()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#fff" stroke-width="2"/></svg></div>
       <div style="display:flex;align-items:center;gap:14px">
         <div style="width:62px;height:62px;border-radius:18px;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0" id="sp-emojibox"><span id="sp-emoji">💪</span></div>
         <div style="flex:1;min-width:0">
@@ -1464,7 +1486,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
             onchange="const r=new FileReader();r.onload=e=>{const d=document.getElementById('editAvatarDisp');d.innerHTML='<img src='+e.target.result+' style=width:100%;height:100%;object-fit:cover>';};if(this.files[0])r.readAsDataURL(this.files[0])">
         </div>
         <div>
-          <div style="font-size:16px;font-weight:800">Lucas Marchand</div>
+          <div id="edit_headername" style="font-size:16px;font-weight:800">Lucas Marchand</div>
           <div style="font-size:12px;color:#000;margin-top:2px">Appuie sur la photo pour changer</div>
         </div>
       </div>
@@ -1478,12 +1500,12 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
       <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px">
         <div>
           <div style="font-size:12px;font-weight:600;color:var(--g4);margin-bottom:5px">Prénom</div>
-          <input type="text" value="Lucas" style="width:100%;height:50px;border-radius:12px;border:1.5px solid var(--g2);padding:0 16px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;background:#fff"
+          <input type="text" id="edit_prenom" value="Lucas" style="width:100%;height:50px;border-radius:12px;border:1.5px solid var(--g2);padding:0 16px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;background:#fff"
             onfocus="this.style.borderColor='#FF2CB5'" onblur="this.style.borderColor='var(--g2)'">
         </div>
         <div>
           <div style="font-size:12px;font-weight:600;color:var(--g4);margin-bottom:5px">Nom</div>
-          <input type="text" value="Marchand" style="width:100%;height:50px;border-radius:12px;border:1.5px solid var(--g2);padding:0 16px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;background:#fff"
+          <input type="text" id="edit_nom" value="Marchand" style="width:100%;height:50px;border-radius:12px;border:1.5px solid var(--g2);padding:0 16px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;background:#fff"
             onfocus="this.style.borderColor='#FF2CB5'" onblur="this.style.borderColor='var(--g2)'">
         </div>
         <div>
@@ -1493,7 +1515,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
         </div>
         <div>
           <div style="font-size:12px;font-weight:600;color:var(--g4);margin-bottom:5px">Ville</div>
-          <input type="text" value="Paris 13e" style="width:100%;height:50px;border-radius:12px;border:1.5px solid var(--g2);padding:0 16px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;background:#fff"
+          <input type="text" id="edit_ville" value="Paris 13e" style="width:100%;height:50px;border-radius:12px;border:1.5px solid var(--g2);padding:0 16px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;background:#fff"
             onfocus="this.style.borderColor='#FF2CB5'" onblur="this.style.borderColor='var(--g2)'">
         </div>
       </div>
@@ -2017,7 +2039,7 @@ function go(idx){
   document.getElementById(newId).offsetHeight;
   setClass(newId,'on');
   stack.push(newId);
-  if(idx===1){ updateEntrBanner(); setTimeout(()=>{initMap();if(mapInstance)mapInstance.invalidateSize();},380); }
+  if(idx===1){ updateEntrBanner(); try{fetchLiveSessions();}catch(e){} setTimeout(()=>{initMap();if(mapInstance)mapInstance.invalidateSize(); try{renderLiveMarkers();}catch(e){}},380); }
 }
 function back(){
   if(stack.length<=1) return;
@@ -2036,14 +2058,50 @@ function goTab(idx){
   document.getElementById(newId).offsetHeight;
   setClass(newId,'on');
   stack=[newId];
-  if(idx===1){ updateEntrBanner(); setTimeout(()=>{initMap();if(mapInstance) mapInstance.invalidateSize();},380); }
+  if(idx===1||idx===2){ try{fetchLiveSessions();}catch(e){} }
+  if(idx===1){ updateEntrBanner(); setTimeout(()=>{initMap();if(mapInstance) mapInstance.invalidateSize(); try{renderLiveMarkers();}catch(e){}},380); }
 }
 
 // ===== PROFIL EDIT =====
-function saveProfile() {
-  const toast = document.getElementById('saveToast');
-  toast.style.display = 'block';
-  setTimeout(() => { toast.style.display = 'none'; back(); }, 1800);
+function profInitials(p){return ((p.prenom||' ').charAt(0)+(p.nom||' ').charAt(0)).toUpperCase();}
+function getProfile(){
+  var d={prenom:'Lucas',nom:'Marchand',ville:'Paris 13e'};
+  try{var s=JSON.parse(localStorage.getItem('aggoProfile')||'null'); if(s){if(s.prenom)d.prenom=s.prenom; if(s.nom)d.nom=s.nom; if(s.ville)d.ville=s.ville;}}catch(e){}
+  return d;
+}
+function applyProfile(){
+  var p=getProfile(), full=(p.prenom+' '+p.nom).trim();
+  var n=document.querySelector('#s4 .ph-name'); if(n) n.textContent=full;
+  var since=document.querySelector('#s4 .ph-since'); if(since) since.textContent='Membre depuis juin 2024 · '+p.ville;
+  var av=document.querySelector('#s4 .ph-av'); if(av) av.textContent=profInitials(p);
+  var fp=document.getElementById('edit_prenom'); if(fp) fp.value=p.prenom;
+  var fn=document.getElementById('edit_nom'); if(fn) fn.value=p.nom;
+  var fv=document.getElementById('edit_ville'); if(fv) fv.value=p.ville;
+  var hn=document.getElementById('edit_headername'); if(hn) hn.textContent=full;
+  var ad=document.getElementById('editAvatarDisp'); if(ad && !ad.querySelector('img')) ad.textContent=profInitials(p);
+  var initials=profInitials(p), shortN=meShort();
+  var rb=document.querySelector('#s3 .rb-name'); if(rb) rb.textContent=shortN;
+  document.querySelectorAll('.fname').forEach(function(f){
+    if(/\(TOI\)/.test(f.textContent)){
+      var sp=f.querySelector('span'); f.textContent=full+' '; if(sp) f.appendChild(sp);
+      var row=f.closest('.lbrow')||f.parentElement.parentElement;
+      var a=row?row.querySelector('.fav'):null; if(a && !a.querySelector('img')) a.textContent=initials;
+    }
+  });
+  var em=document.getElementById('entr_myname'); if(em) em.textContent=full;
+}
+function meShort(){ var p=getProfile(); return p.prenom+(p.nom?' '+p.nom.charAt(0).toUpperCase()+'.':''); }
+function saveProfile(){
+  var p={
+    prenom:((document.getElementById('edit_prenom')||{}).value||'').trim()||'Lucas',
+    nom:((document.getElementById('edit_nom')||{}).value||'').trim()||'Marchand',
+    ville:((document.getElementById('edit_ville')||{}).value||'').trim()||'Paris 13e'
+  };
+  try{localStorage.setItem('aggoProfile',JSON.stringify(p));}catch(e){}
+  applyProfile();
+  var toast=document.getElementById('saveToast');
+  if(toast){ toast.style.display='block'; setTimeout(function(){ toast.style.display='none'; back(); },1400); }
+  else back();
 }
 
 // ===== PROFIL: MENU KEBAB =====
@@ -2158,9 +2216,93 @@ function stepPlayers(d){
   document.getElementById('csPlayersVal').textContent=csPlayers;
 }
 function createSession(){
-  const t=document.getElementById('csToast');
-  t.style.display='block';
-  setTimeout(()=>{t.style.display='none'; goTab(2);},1800);
+  var name=((document.getElementById('cs_name')||{}).value||'').trim();
+  var lieu=((document.getElementById('cs_lieu')||{}).value||'').trim();
+  var date=((document.getElementById('cs_date')||{}).value||'');
+  var heure=((document.getElementById('cs_time')||{}).value||'');
+  var nivEl=document.querySelector('#s15 .cs-chips[data-group="niveau"] .sel');
+  var niveau=nivEl?nivEl.textContent.trim():'Tous niveaux';
+  if(!name){ flashToast('Donne un nom à ta session'); return; }
+  var btn=document.getElementById('cs_submit');
+  if(btn){ btn.disabled=true; btn.textContent='Création…'; }
+  var pr=getProfile(), org=(pr.prenom+' '+pr.nom).trim();
+  geocodeOne(lieu||name).then(function(c){
+    if(!c) c={lat:44.84+(Math.random()-0.5)*0.03, lng:-0.58+(Math.random()-0.5)*0.03};
+    return postSheet({action:'create',sport:csSport,name:name,lieu:lieu,lat:c.lat,lng:c.lng,date:date,heure:heure,niveau:niveau,maxPlayers:csPlayers,organizer:org});
+  }).then(function(res){
+    if(res&&res.ok===false) throw new Error('server');
+    return fetchLiveSessions();
+  }).then(function(){
+    if(btn){ btn.disabled=false; btn.textContent='Créer la session 🚀'; }
+    var t=document.getElementById('csToast'); if(t){ t.style.display='block'; setTimeout(function(){ t.style.display='none'; },1600); }
+    goTab(2);
+  }).catch(function(e){
+    if(btn){ btn.disabled=false; btn.textContent='Créer la session 🚀'; }
+    flashToast('Erreur de création — réessaie');
+  });
+}
+
+// ===== SESSIONS EN DIRECT (Google Sheets) =====
+var SHEET_API='https://script.google.com/macros/s/AKfycbw1TkrAnZJ0pLa7samZfKETjMa8C22ea9MGgxXXUPnR3s9St-01yXgawaJYZVBxuGL5sw/exec';
+var LIVE_SESSIONS=[], liveMarkers=[];
+var SPORT_EMOJI={football:'⚽',basket:'🏀',tennis:'🎾',skate:'🛹',badminton:'🏸',muscu:'💪',running:'🏃',velo:'🚴',natation:'🏊',boxe:'🥊',yoga:'🧘'};
+function escHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function fmtD(v){ if(v==null||v==='') return ''; v=String(v); if(/^\d{4}-\d{2}-\d{2}T/.test(v)){ var d=new Date(v); if(!isNaN(d)) return d.toLocaleDateString('fr-FR',{timeZone:'Europe/Paris',day:'2-digit',month:'2-digit'}); } var ymd=v.match(/^(\d{4})-(\d{2})-(\d{2})/); if(ymd) return ymd[3]+'/'+ymd[2]; return v.length>10?v.slice(0,10):v; }
+function fmtT(v){ if(v==null||v==='') return ''; v=String(v); if(/T\d{2}:\d{2}/.test(v)){ var d=new Date(v); if(!isNaN(d)) return d.toLocaleTimeString('fr-FR',{timeZone:'Europe/Paris',hour:'2-digit',minute:'2-digit'}).replace(':','h'); } var hm=v.match(/^(\d{1,2})[:hH](\d{2})/); if(hm) return (hm[1].length<2?'0'+hm[1]:hm[1])+'h'+hm[2]; return v; }
+function postSheet(payload){
+  return fetch(SHEET_API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)}).then(function(r){return r.json().catch(function(){return {ok:true};});});
+}
+function geocodeOne(q){
+  if(!q) return Promise.resolve(null);
+  var url='https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=fr&accept-language=fr&q='+encodeURIComponent(q+' Bordeaux');
+  return fetch(url).then(function(r){return r.json();}).then(function(a){return (a&&a[0])?{lat:parseFloat(a[0].lat),lng:parseFloat(a[0].lon)}:null;}).catch(function(){return null;});
+}
+function fetchLiveSessions(){
+  return fetch(SHEET_API).then(function(r){return r.json();}).then(function(d){
+    if(d&&d.ok&&Array.isArray(d.sessions)) LIVE_SESSIONS=d.sessions.filter(function(s){return s&&s.id;});
+    renderLiveSessions(); return LIVE_SESSIONS;
+  }).catch(function(e){ renderLiveSessions(); });
+}
+function renderLiveSessions(){ renderLiveSessionCards(); renderLiveMarkers(); }
+function renderLiveSessionCards(){
+  var box=document.getElementById('liveSessions'); if(!box) return;
+  if(!LIVE_SESSIONS.length){ box.innerHTML=''; return; }
+  var h='<div class="sec-hd" style="padding:4px 16px 8px">🟢 Sessions en direct · '+LIVE_SESSIONS.length+'</div>';
+  LIVE_SESSIONS.forEach(function(s){
+    var emo=SPORT_EMOJI[s.sport]||'📍', j=Number(s.joined||0), max=Number(s.maxPlayers||0), full=max>0&&j>=max;
+    h+='<div class="card" style="margin:0 16px 10px;padding:13px;display:flex;gap:11px;align-items:center">'
+      +'<div style="width:46px;height:46px;border-radius:12px;background:#ffe8f8;display:flex;align-items:center;justify-content:center;font-size:23px;flex-shrink:0">'+emo+'</div>'
+      +'<div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+escHtml(s.name||'Session')+'</div>'
+      +'<div style="font-size:12px;color:var(--g4);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">📍 '+escHtml(s.lieu||'—')+'</div>'
+      +'<div style="font-size:11px;color:var(--g3);margin-top:1px">'+escHtml(fmtD(s.date))+' · '+escHtml(fmtT(s.heure))+' · '+escHtml(s.niveau||'')+'</div></div>'
+      +'<div style="text-align:right;flex-shrink:0"><div style="font-size:12px;font-weight:800;color:'+(full?'#d32f2f':'var(--green)')+'">'+j+'/'+(max||'∞')+'</div>'
+      +'<button class="btn '+(full?'btn-outline':'btn-pink')+'" style="height:32px;font-size:12px;padding:0 13px;margin-top:6px"'+(full?' disabled':'')+' onclick="joinLiveSession(\''+escHtml(s.id)+'\',this)">'+(full?'Complet':'Rejoindre')+'</button></div></div>';
+  });
+  box.innerHTML=h;
+}
+function renderLiveMarkers(){
+  if(typeof mapInstance==='undefined'||!mapInstance||typeof L==='undefined') return;
+  liveMarkers.forEach(function(m){ try{mapInstance.removeLayer(m);}catch(e){} }); liveMarkers=[];
+  LIVE_SESSIONS.forEach(function(s){
+    var la=parseFloat(s.lat), ln=parseFloat(s.lng); if(isNaN(la)||isNaN(ln)) return;
+    var emo=SPORT_EMOJI[s.sport]||'📍', j=Number(s.joined||0), max=Number(s.maxPlayers||0), full=max>0&&j>=max;
+    var icon=L.divIcon({className:'',html:'<div style="position:relative;width:34px;height:44px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))"><svg width=34 height=44 viewBox="0 0 34 44"><path d="M17 0C8 0 1 7 1 16c0 12 16 28 16 28s16-16 16-28C33 7 26 0 17 0z" fill="#FF2CB5"/><circle cx=17 cy=16 r=11 fill="#fff"/></svg><span style="position:absolute;top:5px;left:0;width:34px;text-align:center;font-size:15px">'+emo+'</span></div>',iconSize:[34,44],iconAnchor:[17,44]});
+    var m=L.marker([la,ln],{icon:icon}).addTo(mapInstance);
+    m.bindPopup('<div style="font-family:DM Sans,sans-serif;min-width:160px"><div style="font-weight:800;font-size:14px">'+escHtml(s.name||'Session')+'</div><div style="font-size:12px;color:#777;margin:3px 0 7px">'+emo+' '+escHtml(fmtD(s.date))+' '+escHtml(fmtT(s.heure))+' · '+j+'/'+(max||'∞')+' joueurs</div><button onclick="joinLiveSession(\''+escHtml(s.id)+'\')" style="border:none;background:'+(full?'#bbb':'#FF2CB5')+';color:#fff;font-weight:700;border-radius:100px;padding:7px 15px;font-size:12px;cursor:pointer"'+(full?' disabled':'')+'>'+(full?'Complet':'Rejoindre')+'</button></div>');
+    liveMarkers.push(m);
+  });
+}
+function joinLiveSession(id,btn){
+  if(btn){ btn.textContent='…'; btn.disabled=true; }
+  postSheet({action:'join',id:id}).then(function(res){
+    if(res&&res.ok===false) throw new Error('nf');
+    if(typeof mapInstance!=='undefined'&&mapInstance) mapInstance.closePopup();
+    flashToast('Inscription confirmée ! 🎉');
+    return fetchLiveSessions();
+  }).catch(function(e){
+    flashToast('Impossible de rejoindre');
+    if(btn){ btn.textContent='Rejoindre'; btn.disabled=false; }
+  });
 }
 
 
@@ -2324,8 +2466,8 @@ function applySF(){
 }
 
 // ===== SESSION DETAIL: favori + carte + partage =====
-var HEART_O='<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-10-9.3C.6 8.5 2.2 5 5.6 5c2 0 3.4 1.2 4.4 2.6C11 6.2 12.4 5 14.4 5c3.4 0 5 3.5 3.6 6.7C19.5 16.4 12 21 12 21z" stroke="#000" stroke-width="2"/></svg>';
-var HEART_F='<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.3C.6 8.5 2.2 5 5.6 5c2 0 3.4 1.2 4.4 2.6C11 6.2 12.4 5 14.4 5c3.4 0 5 3.5 3.6 6.7C19.5 16.4 12 21 12 21z" fill="#FF2CB5"/></svg>';
+var HEART_O='<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#000" stroke-width="2"/></svg>';
+var HEART_F='<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FF2CB5"/></svg>';
 var sessFav=false;
 function toggleSessFav6(){ sessFav=!sessFav; var el=document.getElementById('sd-fav'); if(el) el.innerHTML=sessFav?HEART_F:HEART_O; }
 function openMapAt(){
@@ -2333,15 +2475,16 @@ function openMapAt(){
   goTab(1);
   setTimeout(function(){ var inp=document.getElementById('mapSearch'); if(inp) inp.value=name.replace(' Bordeaux',''); if(typeof geocode==='function') geocode(name,true); }, 550);
 }
-function shareToast(){ if(typeof spotToast==='function'){spotToast('Lien copié ! 🔗');} else { alert('Lien de la session copié !'); } }
+function flashToast(msg){var t=document.createElement('div');t.textContent=msg;t.style.cssText='position:absolute;left:50%;bottom:120px;transform:translateX(-50%) translateY(0);background:#000;color:#C0F333;padding:12px 24px;border-radius:100px;font-size:14px;font-weight:700;z-index:9999;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.3);opacity:0;transition:opacity .2s ease,transform .2s ease;pointer-events:none';(document.querySelector('.scene')||document.body).appendChild(t);requestAnimationFrame(function(){t.style.opacity='1';t.style.transform='translateX(-50%) translateY(-6px)';});setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},250);},1800);}
+function shareToast(){ try{ if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(location.href); } }catch(e){} flashToast('Lien de la session copié ! 🔗'); }
 
 
 // ===== CARTE: FAVORIS SPOTS + FILTRE DROPDOWN + PROPOSER =====
 var FAVS=(function(){try{return new Set(JSON.parse(localStorage.getItem('aggoFavSpots')||'[]'));}catch(e){return new Set();}})();
 function saveFavs(){try{localStorage.setItem('aggoFavSpots',JSON.stringify(Array.from(FAVS)));}catch(e){}}
 function isFavSpot(i){return FAVS.has(i);}
-var HEART_FW='<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.3C.6 8.5 2.2 5 5.6 5c2 0 3.4 1.2 4.4 2.6C11 6.2 12.4 5 14.4 5c3.4 0 5 3.5 3.6 6.7C19.5 16.4 12 21 12 21z" fill="#FF2CB5"/></svg>';
-var HEART_OWH='<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-10-9.3C.6 8.5 2.2 5 5.6 5c2 0 3.4 1.2 4.4 2.6C11 6.2 12.4 5 14.4 5c3.4 0 5 3.5 3.6 6.7C19.5 16.4 12 21 12 21z" stroke="#fff" stroke-width="2"/></svg>';
+var HEART_FW='<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FF2CB5"/></svg>';
+var HEART_OWH='<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#fff" stroke-width="2"/></svg>';
 function updateSpotFavHeart(){var h=document.getElementById('sp-favbtn'); if(!h)return; h.innerHTML=isFavSpot(curSpot)?HEART_FW:HEART_OWH;}
 function toggleFavSpot(){var i=curSpot; if(FAVS.has(i)){FAVS.delete(i);spotToast('Retiré des favoris');}else{FAVS.add(i);spotToast('Ajouté aux favoris ❤️');} saveFavs(); updateSpotFavHeart();}
 function openFavorites(){renderFavorites(); go(19);}
@@ -2401,6 +2544,8 @@ function applyStickers(){
   });
 }
 applyStickers();
+applyProfile();
+try{fetchLiveSessions();}catch(e){}
 initSheetDrag();
 
 // ===== FIT PHONE FRAME TO WINDOW =====
@@ -2527,6 +2672,8 @@ function renderSpotsList(){
   function dkm(la,lo){var R=6371,dLa=(la-ULAT)*Math.PI/180,dLo=(lo-ULON)*Math.PI/180;var a=Math.sin(dLa/2)*Math.sin(dLa/2)+Math.cos(ULAT*Math.PI/180)*Math.cos(la*Math.PI/180)*Math.sin(dLo/2)*Math.sin(dLo/2);return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
   var TINT={muscu:'#eee9ff',skate:'#e0f7f3',football:'#e8f8e8',basket:'#ffe8d6'};
   var STM={ok:'\uD83D\uDFE2',warn:'\uD83D\uDFE0',ko:'\uD83D\uDD34'};
+  var STL={ok:'Libre',warn:'Affluence',ko:'Occup\u00E9'};
+  var STC={ok:'#2D9E40',warn:'#cc7700',ko:'#d32f2f'};
   var arr=SPOTS.map(function(s,i){return {i:i,d:dkm(s.lat,s.lng),s:s};}).filter(function(o){return (typeof fmSport==='undefined'||fmSport==='all'||o.s.sport===fmSport)&&(typeof fmDist==='undefined'||o.d<=parseFloat(fmDist));}).sort(function(a,b){return a.d-b.d;});
   var h='';
   arr.forEach(function(o,idx){
@@ -2534,7 +2681,7 @@ function renderSpotsList(){
     h+='<div class="session-row" onclick="openSpot('+o.i+')">'
      +'<div class="sr-img" style="background:'+(TINT[s.sport]||'#f0f0f0')+';background-image:url('+STICKERS[s.sport]+');background-size:84%;background-repeat:no-repeat;background-position:center"></div>'
      +'<div class="sr-info"><div class="sr-title">'+s.name+'</div><div class="sr-meta">\uD83D\uDCCD '+km+' km \u00B7 '+s.label+'</div></div>'
-     +'<div class="sr-right" style="align-items:flex-end"><div style="font-size:11px;font-weight:700;color:var(--g4)">'+STM[spotRT[o.i].state]+' Libre</div><div class="chip" style="background:var(--g1);color:#000;font-size:10px;padding:3px 8px;margin-top:3px">Voir</div></div>'
+     +'<div class="sr-right" style="align-items:flex-end"><div style="font-size:11px;font-weight:700;color:'+STC[spotRT[o.i].state]+'">'+STM[spotRT[o.i].state]+' '+STL[spotRT[o.i].state]+'</div><div class="chip" style="background:var(--g1);color:#000;font-size:10px;padding:3px 8px;margin-top:3px">Voir</div></div>'
      +'</div>';
     if(idx<arr.length-1) h+='<div class="sep"></div>';
   });
@@ -2600,7 +2747,7 @@ function pickReviewStar(n){reviewStars=n;var sp=document.querySelectorAll('#sp-s
 function toggleReviewForm(){document.getElementById('sp-revform').classList.toggle('show');}
 function submitReview(){
   var t=document.getElementById('sp-revtext').value.trim()||'Super spot, je recommande !';
-  SPOTS[curSpot].reviews.unshift({n:'Lucas M.',r:reviewStars,t:t,d:'\u00E0 l\'instant',img:reviewImg});
+  SPOTS[curSpot].reviews.unshift({n:meShort(),r:reviewStars,t:t,d:'\u00E0 l\'instant',img:reviewImg});
   reviewImg=null; var pv=document.getElementById('sp-revpreview'); pv.style.display='none'; pv.src='';
   document.getElementById('sp-revtext').value='';
   document.getElementById('sp-revform').classList.remove('show');

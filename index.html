@@ -1067,7 +1067,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
     <div style="margin:14px 16px;padding:14px 16px;background:#000;color:#fff;border-radius:16px;display:flex;align-items:center;gap:12px">
       <div class="lbrank" style="color:var(--lime);width:auto;font-size:16px">#12</div>
       <div class="fav" style="background:var(--lime);color:#000;width:38px;height:38px;font-size:13px">LM</div>
-      <div style="flex:1"><div style="font-size:14px;font-weight:800">Lucas Marchand</div><div style="font-size:11px;opacity:.7">Rang Argent · 1 240 pts</div></div>
+      <div style="flex:1"><div id="entr_myname" style="font-size:14px;font-weight:800">Lucas Marchand</div><div style="font-size:11px;opacity:.7">Rang Argent · 1 240 pts</div></div>
       <div style="font-size:11px;text-align:right;opacity:.8">+3 places<br>cette semaine ↗</div>
     </div>
     <div style="height:30px"></div>
@@ -2079,7 +2079,18 @@ function applyProfile(){
   var fv=document.getElementById('edit_ville'); if(fv) fv.value=p.ville;
   var hn=document.getElementById('edit_headername'); if(hn) hn.textContent=full;
   var ad=document.getElementById('editAvatarDisp'); if(ad && !ad.querySelector('img')) ad.textContent=profInitials(p);
+  var initials=profInitials(p), shortN=meShort();
+  var rb=document.querySelector('#s3 .rb-name'); if(rb) rb.textContent=shortN;
+  document.querySelectorAll('.fname').forEach(function(f){
+    if(/\(TOI\)/.test(f.textContent)){
+      var sp=f.querySelector('span'); f.textContent=full+' '; if(sp) f.appendChild(sp);
+      var row=f.closest('.lbrow')||f.parentElement.parentElement;
+      var a=row?row.querySelector('.fav'):null; if(a && !a.querySelector('img')) a.textContent=initials;
+    }
+  });
+  var em=document.getElementById('entr_myname'); if(em) em.textContent=full;
 }
+function meShort(){ var p=getProfile(); return p.prenom+(p.nom?' '+p.nom.charAt(0).toUpperCase()+'.':''); }
 function saveProfile(){
   var p={
     prenom:((document.getElementById('edit_prenom')||{}).value||'').trim()||'Lucas',
@@ -2232,12 +2243,12 @@ function createSession(){
 }
 
 // ===== SESSIONS EN DIRECT (Google Sheets) =====
-var SHEET_API='https://script.google.com/macros/s/AKfycbyjLxnJObGY8pQ4Y9DUgyxo61To7ryNuh0fKR1Pya5GTSR6kU0xn6uMrZ9VZx_9xGQZ7g/exec';
+var SHEET_API='https://script.google.com/macros/s/AKfycbw1TkrAnZJ0pLa7samZfKETjMa8C22ea9MGgxXXUPnR3s9St-01yXgawaJYZVBxuGL5sw/exec';
 var LIVE_SESSIONS=[], liveMarkers=[];
 var SPORT_EMOJI={football:'⚽',basket:'🏀',tennis:'🎾',skate:'🛹',badminton:'🏸',muscu:'💪',running:'🏃',velo:'🚴',natation:'🏊',boxe:'🥊',yoga:'🧘'};
 function escHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
-function fmtD(v){ if(v==null||v==='') return ''; v=String(v); var iso=v.match(/^(\d{4})-(\d{2})-(\d{2})T/); if(iso) return iso[3]+'/'+iso[2]; var ymd=v.match(/^(\d{4})-(\d{2})-(\d{2})/); if(ymd) return ymd[3]+'/'+ymd[2]; return v.slice(0,10); }
-function fmtT(v){ if(v==null||v==='') return ''; v=String(v); var iso=v.match(/T(\d{2}):(\d{2})/); if(iso) return iso[1]+'h'+iso[2]; var hm=v.match(/^(\d{1,2})[:hH](\d{2})/); if(hm) return (hm[1].length<2?'0'+hm[1]:hm[1])+'h'+hm[2]; return v; }
+function fmtD(v){ if(v==null||v==='') return ''; v=String(v); if(/^\d{4}-\d{2}-\d{2}T/.test(v)){ var d=new Date(v); if(!isNaN(d)) return d.toLocaleDateString('fr-FR',{timeZone:'Europe/Paris',day:'2-digit',month:'2-digit'}); } var ymd=v.match(/^(\d{4})-(\d{2})-(\d{2})/); if(ymd) return ymd[3]+'/'+ymd[2]; return v.length>10?v.slice(0,10):v; }
+function fmtT(v){ if(v==null||v==='') return ''; v=String(v); if(/T\d{2}:\d{2}/.test(v)){ var d=new Date(v); if(!isNaN(d)) return d.toLocaleTimeString('fr-FR',{timeZone:'Europe/Paris',hour:'2-digit',minute:'2-digit'}).replace(':','h'); } var hm=v.match(/^(\d{1,2})[:hH](\d{2})/); if(hm) return (hm[1].length<2?'0'+hm[1]:hm[1])+'h'+hm[2]; return v; }
 function postSheet(payload){
   return fetch(SHEET_API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)}).then(function(r){return r.json().catch(function(){return {ok:true};});});
 }
@@ -2736,7 +2747,7 @@ function pickReviewStar(n){reviewStars=n;var sp=document.querySelectorAll('#sp-s
 function toggleReviewForm(){document.getElementById('sp-revform').classList.toggle('show');}
 function submitReview(){
   var t=document.getElementById('sp-revtext').value.trim()||'Super spot, je recommande !';
-  SPOTS[curSpot].reviews.unshift({n:'Lucas M.',r:reviewStars,t:t,d:'\u00E0 l\'instant',img:reviewImg});
+  SPOTS[curSpot].reviews.unshift({n:meShort(),r:reviewStars,t:t,d:'\u00E0 l\'instant',img:reviewImg});
   reviewImg=null; var pv=document.getElementById('sp-revpreview'); pv.style.display='none'; pv.src='';
   document.getElementById('sp-revtext').value='';
   document.getElementById('sp-revform').classList.remove('show');

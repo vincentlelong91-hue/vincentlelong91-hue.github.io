@@ -1375,7 +1375,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
 
       <div class="sp-sec">État des équipements <span style="font-size:11px;font-weight:600;color:var(--g3);text-transform:none;letter-spacing:0">· temps réel</span></div>
       <div style="background:var(--g1);border-radius:16px;padding:16px">
-        <div id="sp-state-badge" style="font-size:18px;font-weight:800;display:flex;align-items:center;gap:8px">🟢 Tout fonctionne</div>
+        <div id="sp-state-badge" style="font-size:18px;font-weight:800;display:flex;align-items:center;gap:8px"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#2D9E40;flex:0 0 auto"></span>Tout fonctionne</div>
         <div id="sp-state-meta" style="font-size:12px;color:var(--g3);margin-top:4px">Signalé il y a 3h · 14 confirmations</div>
         <div style="font-size:12px;color:var(--g4);margin-top:12px;font-weight:600">Mettre à jour l'état :</div>
         <div class="sp-statebtns">
@@ -2810,12 +2810,12 @@ function makeSpotIcon(s){
 }
 function spotCreate(){ if(mapInstance)mapInstance.closePopup(); go(15); }
 
+function stDot(c,sz,mr){if(sz==null)sz=9;if(mr==null)mr=6;return '<span style="display:inline-block;width:'+sz+'px;height:'+sz+'px;border-radius:50%;background:'+c+';vertical-align:middle;margin-right:'+mr+'px;flex:0 0 auto"></span>';}
 function renderSpotsList(){
   var box=document.getElementById('spotsList'); if(!box||typeof SPOTS==='undefined'||typeof STICKERS==='undefined') return;
   var ULAT=44.8378, ULON=-0.5792;
   function dkm(la,lo){var R=6371,dLa=(la-ULAT)*Math.PI/180,dLo=(lo-ULON)*Math.PI/180;var a=Math.sin(dLa/2)*Math.sin(dLa/2)+Math.cos(ULAT*Math.PI/180)*Math.cos(la*Math.PI/180)*Math.sin(dLo/2)*Math.sin(dLo/2);return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
   var TINT={muscu:'#eee9ff',skate:'#e0f7f3',football:'#e8f8e8',basket:'#ffe8d6'};
-  var STM={ok:'\uD83D\uDFE2',warn:'\uD83D\uDFE0',ko:'\uD83D\uDD34'};
   var STL={ok:'Libre',warn:'Affluence',ko:'Occup\u00E9'};
   var STC={ok:'#2D9E40',warn:'#cc7700',ko:'#d32f2f'};
   var arr=SPOTS.map(function(s,i){return {i:i,d:dkm(s.lat,s.lng),s:s};}).filter(function(o){return (typeof fmSport==='undefined'||fmSport==='all'||o.s.sport===fmSport)&&(typeof fmDist==='undefined'||o.d<=parseFloat(fmDist));}).sort(function(a,b){return a.d-b.d;});
@@ -2825,7 +2825,7 @@ function renderSpotsList(){
     h+='<div class="session-row" onclick="openSpot('+o.i+')">'
      +'<div class="sr-img" style="background:'+(TINT[s.sport]||'#f0f0f0')+';background-image:url('+STICKERS[s.sport]+');background-size:84%;background-repeat:no-repeat;background-position:center"></div>'
      +'<div class="sr-info"><div class="sr-title">'+s.name+'</div><div class="sr-meta">\uD83D\uDCCD '+km+' km \u00B7 '+s.label+'</div></div>'
-     +'<div class="sr-right" style="align-items:flex-end"><div style="font-size:11px;font-weight:700;color:'+STC[spotRT[o.i].state]+'">'+STM[spotRT[o.i].state]+' '+STL[spotRT[o.i].state]+'</div><div class="chip" style="background:var(--g1);color:#000;font-size:10px;padding:3px 8px;margin-top:3px">Voir</div></div>'
+     +'<div class="sr-right" style="align-items:flex-end"><div style="font-size:11px;font-weight:700;color:'+STC[spotRT[o.i].state]+'">'+stDot(STC[spotRT[o.i].state])+STL[spotRT[o.i].state]+'</div><div class="chip" style="background:var(--g1);color:#000;font-size:10px;padding:3px 8px;margin-top:3px">Voir</div></div>'
      +'</div>';
     if(idx<arr.length-1) h+='<div class="sep"></div>';
   });
@@ -2862,7 +2862,7 @@ function renderSpotState(i){
   var st=spotRT[i].state;
   var M={ok:{e:'\uD83D\uDFE2',t:'Tout fonctionne',c:'#2D9E40'},warn:{e:'\uD83D\uDFE0',t:'\u00C9quipement ab\u00EEm\u00E9',c:'#cc7700'},ko:{e:'\uD83D\uDD34',t:'Inutilisable actuellement',c:'#d32f2f'}};
   var m=M[st];
-  document.getElementById('sp-state-badge').innerHTML='<span style="font-size:18px">'+m.e+'</span> '+m.t;
+  document.getElementById('sp-state-badge').innerHTML=stDot(m.c,14,0)+m.t;
   document.getElementById('sp-state-badge').style.color=m.c;
   document.getElementById('sp-state-meta').textContent='Signal\u00E9 '+spotRT[i].when+' \u00B7 '+spotRT[i].confirms+' confirmation'+(spotRT[i].confirms>1?'s':'');
   ['ok','warn','ko'].forEach(function(k){document.getElementById('sp-btn-'+k).className='sp-statebtn'+(k===st?' act-'+k:'');});

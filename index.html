@@ -312,6 +312,16 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
            font-family:'DM Sans',sans-serif;transition:transform .1s,opacity .1s;}
 .ecode-btn:active{transform:scale(.97);opacity:.9;}
 .ecode-hint{font-size:11px;color:var(--g3);text-align:center;line-height:1.45;margin-top:14px;}
+.cc-opt{display:flex;align-items:center;gap:13px;width:100%;background:var(--g1);border:2px solid transparent;
+        border-radius:16px;padding:14px;margin-top:12px;cursor:pointer;transition:border-color .15s,background .15s,transform .1s;}
+.cc-opt:active{transform:scale(.98);}
+.cc-opt:hover{border-color:var(--pink);background:#fff;}
+.cc-opt-ic{width:46px;height:46px;border-radius:13px;background:#ffe8f8;display:flex;align-items:center;
+           justify-content:center;font-size:24px;flex-shrink:0;}
+.cc-opt-txt{flex:1;min-width:0;text-align:left;}
+.cc-opt-t{font-size:16px;font-weight:800;}
+.cc-opt-d{font-size:12px;color:var(--g4);margin-top:2px;line-height:1.35;}
+.cc-opt-ar{font-size:22px;color:var(--g3);font-weight:800;}
 
 /* ===== BANDEAU "CHALLENGE REJOINT" (carte) ===== */
 .ejoin-banner{position:absolute;top:166px;left:14px;right:14px;z-index:350;
@@ -610,7 +620,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
   <div class="bnav">
     <div class="ni act" onclick="goTab(1)"><div class="ni-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="#000"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#000" stroke-width="2" fill="none"/></svg></div><div class="ni-lbl">Carte</div></div>
     <div class="ni" onclick="goTab(2)"><div class="ni-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="3" stroke="#B0B0B0" stroke-width="2"/><line x1="8" y1="9" x2="16" y2="9" stroke="#B0B0B0" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="13" x2="13" y2="13" stroke="#B0B0B0" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ni-lbl">Sessions</div></div>
-    <div class="nfab" onclick="go(15)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+    <div class="nfab" onclick="openCreateChoice()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></div>
     <div class="ni" onclick="goTab(3)"><div class="ni-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#B0B0B0" stroke-width="2" fill="none"/></svg></div><div class="ni-lbl">Défis</div></div>
     <div class="ni" onclick="goTab(4)"><div class="ni-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#B0B0B0" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#B0B0B0" stroke-width="2" stroke-linecap="round"/></svg></div><div class="ni-lbl">Profil</div></div>
   </div>
@@ -622,7 +632,15 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
     <div class="sb"><span class="sb-time">9:41</span><div style="display:flex;gap:5px;align-items:center"><svg width="16" height="12" viewBox="0 0 16 12"><rect x="0" y="6" width="3" height="6" rx="1" fill="#000"/><rect x="4.5" y="4" width="3" height="8" rx="1" fill="#000"/><rect x="9" y="1.5" width="3" height="10.5" rx="1" fill="#000"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" fill="#000" opacity=".3"/></svg><svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 3C5.5 3 3.3 4.1 1.8 5.9L0 4C2 1.5 4.8 0 8 0s6 1.5 8 4l-1.8 1.9C12.7 4.1 10.5 3 8 3z" fill="#000"/><path d="M8 7c-1.4 0-2.6.6-3.5 1.5L3 7c1.3-1.3 3-2 5-2s3.7.7 5 2l-1.5 1.5C10.6 7.6 9.4 7 8 7z" fill="#000"/><circle cx="8" cy="11" r="1.5" fill="#000"/></svg><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="22" height="10" rx="3" stroke="#000" stroke-width="1.5" fill="none"/><rect x="1.5" y="2.5" width="17" height="7" rx="2" fill="#000"/><rect x="22.5" y="3.5" width="2" height="5" rx="1" fill="#000" opacity=".4"/></svg></div></div>
     <div style="padding:0 16px 16px;display:flex;justify-content:space-between;align-items:center">
       <div style="font-size:26px;font-weight:900">Sessions</div>
-      <div onclick="go(15)" style="width:36px;height:36px;background:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+      <div onclick="openCreateChoice()" style="width:36px;height:36px;background:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+    </div>
+    <div style="padding:0 16px 12px">
+      <div onclick="openMySessions()" style="display:flex;align-items:center;gap:10px;background:var(--g1);border-radius:14px;padding:12px 14px;cursor:pointer">
+        <div style="width:34px;height:34px;border-radius:10px;background:#ffe8f8;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">📋</div>
+        <div style="flex:1;font-size:14px;font-weight:800">Mes sessions</div>
+        <div id="mySessCount" style="font-size:12px;font-weight:800;color:var(--pink);background:#ffe8f8;border-radius:100px;padding:3px 10px;min-width:22px;text-align:center">0</div>
+        <div style="font-size:20px;color:var(--g3);font-weight:800">›</div>
+      </div>
     </div>
     <div class="sf-bar">
       <div class="sf-pill" id="sf-sport" onclick="cycleSF('sport')">🏅 Sport</div>
@@ -695,7 +713,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
   <div class="bnav">
     <div class="ni" onclick="goTab(1)"><div class="ni-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="#B0B0B0"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#B0B0B0" stroke-width="2" fill="none"/></svg></div><div class="ni-lbl">Carte</div></div>
     <div class="ni act" onclick="goTab(2)"><div class="ni-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="3" stroke="#000" stroke-width="2"/><line x1="8" y1="9" x2="16" y2="9" stroke="#000" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="13" x2="13" y2="13" stroke="#000" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ni-lbl">Sessions</div></div>
-    <div class="nfab" onclick="go(15)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+    <div class="nfab" onclick="openCreateChoice()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></div>
     <div class="ni" onclick="goTab(3)"><div class="ni-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#B0B0B0" stroke-width="2" fill="none"/></svg></div><div class="ni-lbl">Défis</div></div>
     <div class="ni" onclick="goTab(4)"><div class="ni-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#B0B0B0" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#B0B0B0" stroke-width="2" stroke-linecap="round"/></svg></div><div class="ni-lbl">Profil</div></div>
   </div>
@@ -746,7 +764,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
   <div class="bnav">
     <div class="ni" onclick="goTab(1)"><div class="ni-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="#B0B0B0"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#B0B0B0" stroke-width="2" fill="none"/></svg></div><div class="ni-lbl">Carte</div></div>
     <div class="ni" onclick="goTab(2)"><div class="ni-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="3" stroke="#B0B0B0" stroke-width="2"/></svg></div><div class="ni-lbl">Sessions</div></div>
-    <div class="nfab" onclick="go(15)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+    <div class="nfab" onclick="openCreateChoice()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></div>
     <div class="ni act" onclick="goTab(3)"><div class="ni-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#000" stroke-width="2" fill="none"/></svg></div><div class="ni-lbl">Défis</div></div>
     <div class="ni" onclick="goTab(4)"><div class="ni-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#B0B0B0" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#B0B0B0" stroke-width="2" stroke-linecap="round"/></svg></div><div class="ni-lbl">Profil</div></div>
   </div>
@@ -842,7 +860,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
   <div class="bnav">
     <div class="ni" onclick="goTab(1)"><div class="ni-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="#B0B0B0"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#B0B0B0" stroke-width="2" fill="none"/></svg></div><div class="ni-lbl">Carte</div></div>
     <div class="ni" onclick="goTab(2)"><div class="ni-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="3" stroke="#B0B0B0" stroke-width="2"/></svg></div><div class="ni-lbl">Sessions</div></div>
-    <div class="nfab" onclick="go(15)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+    <div class="nfab" onclick="openCreateChoice()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></div>
     <div class="ni" onclick="goTab(3)"><div class="ni-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#B0B0B0" stroke-width="2" fill="none"/></svg></div><div class="ni-lbl">Défis</div></div>
     <div class="ni act" onclick="goTab(4)"><div class="ni-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#000" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#000" stroke-width="2" stroke-linecap="round"/></svg></div><div class="ni-lbl">Profil</div></div>
   </div>
@@ -1113,6 +1131,28 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
   <div id="propToast" style="display:none;position:absolute;bottom:30px;left:50%;transform:translateX(-50%);background:#000;color:#C0F333;padding:14px 24px;border-radius:100px;font-size:14px;font-weight:800;z-index:999;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.3);text-align:center">✓</div>
 </div>
 
+<!-- ====== S22 MES SESSIONS ====== -->
+<div class="screen off-right" id="s22">
+  <div class="scroll" style="bottom:0">
+    <div class="subhead">
+      <div style="height:20px"></div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="subback" onclick="back()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="#000" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+        <div style="font-size:22px;font-weight:900;flex:1">Mes sessions 📋</div>
+      </div>
+      <div style="font-size:13px;color:var(--g4);margin-top:4px;margin-left:52px">Les sessions auxquelles tu participes</div>
+    </div>
+    <div style="height:8px"></div>
+    <div id="mySessList"></div>
+    <div id="mySessEmpty" style="display:none;padding:54px 30px;text-align:center;color:var(--g3)">
+      <div style="font-size:46px;margin-bottom:10px">📭</div>
+      <div style="font-size:15px;font-weight:700;color:#000;margin-bottom:5px">Aucune session pour l'instant</div>
+      <div style="font-size:13px;line-height:1.5">Inscris-toi à une session en direct<br>ou crée la tienne pour la retrouver ici.</div>
+    </div>
+    <div style="height:40px"></div>
+  </div>
+</div>
+
 <!-- ====== S5 CHALLENGE ENTREPRISE ====== -->
 <div class="screen off-right" id="s5">
   <div class="scroll">
@@ -1263,7 +1303,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
   <div class="scroll" style="bottom:0">
     <div class="cs-head">
       <div class="cs-back" onclick="back()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="#000" stroke-width="2.5" stroke-linecap="round"/></svg></div>
-      <div style="font-size:20px;font-weight:900">Créer une session</div>
+      <div style="font-size:20px;font-weight:900" id="cs_title">Créer une session</div>
     </div>
     <div class="cs-body">
 
@@ -1313,11 +1353,13 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
         <div class="cs-chip" onclick="pickChip(this)">Tous niveaux</div>
       </div>
 
+      <div id="cs_players_sec">
       <div class="cs-label">Nombre de joueurs max</div>
       <div class="cs-stepper">
         <div class="cs-stepbtn" onclick="stepPlayers(-1)">−</div>
         <div class="cs-stepval" id="csPlayersVal">10</div>
         <div class="cs-stepbtn" onclick="stepPlayers(1)">+</div>
+      </div>
       </div>
 
       <div class="cs-label">Type</div>
@@ -1402,7 +1444,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
       </div>
       <div id="sp-reviews"></div>
 
-      <button class="btn" style="width:100%;height:54px;font-size:16px;font-weight:800;background:var(--lime);color:#000;margin-top:22px" onclick="go(15)">+ Créer une session ici</button>
+      <button class="btn" style="width:100%;height:54px;font-size:16px;font-weight:800;background:var(--lime);color:#000;margin-top:22px" onclick="openCreateChoice()">+ Créer une session ici</button>
       <div style="height:30px"></div>
     </div>
   </div>
@@ -2006,6 +2048,26 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
   </div>
 </div>
 
+<!-- ===== Modale : type de session (solo / à plusieurs) ===== -->
+<div id="createChoiceModal" class="ecode-overlay" onclick="if(event.target===this)closeCreateChoice()">
+  <div class="ecode-card">
+    <div class="ecode-close" onclick="closeCreateChoice()">✕</div>
+    <div class="ecode-ico">🏃</div>
+    <div class="ecode-title">Créer une session</div>
+    <div class="ecode-sub">Tu veux t'entraîner seul ou ouvrir la session à d'autres&nbsp;?</div>
+    <div class="cc-opt" onclick="startCreate('solo')">
+      <div class="cc-opt-ic">🧍</div>
+      <div class="cc-opt-txt"><div class="cc-opt-t">Solo</div><div class="cc-opt-d">Une séance perso, juste pour toi</div></div>
+      <div class="cc-opt-ar">›</div>
+    </div>
+    <div class="cc-opt" onclick="startCreate('groupe')">
+      <div class="cc-opt-ic">👥</div>
+      <div class="cc-opt-txt"><div class="cc-opt-t">À plusieurs</div><div class="cc-opt-d">Ouverte aux autres joueurs qui peuvent s'inscrire</div></div>
+      <div class="cc-opt-ar">›</div>
+    </div>
+  </div>
+</div>
+
 </div><!-- /scene -->
 
 <script>
@@ -2287,6 +2349,56 @@ function stepPlayers(d){
   csPlayers=Math.max(2,Math.min(30,csPlayers+d));
   document.getElementById('csPlayersVal').textContent=csPlayers;
 }
+
+// ===== Type de session : solo / à plusieurs =====
+var csMode='groupe';
+function openCreateChoice(){ var m=document.getElementById('createChoiceModal'); if(m) m.classList.add('show'); }
+function closeCreateChoice(){ var m=document.getElementById('createChoiceModal'); if(m) m.classList.remove('show'); }
+function startCreate(mode){ csMode=mode; closeCreateChoice(); applyCreateMode(mode); go(15); }
+function applyCreateMode(mode){
+  var solo=(mode==='solo');
+  var t=document.getElementById('cs_title'); if(t) t.textContent=solo?'Créer une séance solo':'Créer une session';
+  var ps=document.getElementById('cs_players_sec'); if(ps) ps.style.display=solo?'none':'';
+  if(solo){ csPlayers=1; }
+  else { csPlayers=10; var v=document.getElementById('csPlayersVal'); if(v) v.textContent='10'; }
+  var sub=document.getElementById('cs_submit'); if(sub) sub.textContent=solo?'Créer ma séance 🚀':'Créer la session 🚀';
+}
+
+// ===== Mes sessions (inscrites + créées) =====
+var JOINED_SESSIONS=(function(){try{return new Set(JSON.parse(localStorage.getItem('aggoJoinedSessions')||'[]'));}catch(e){return new Set();}})();
+function saveJoinedSessions(){ try{localStorage.setItem('aggoJoinedSessions',JSON.stringify(Array.prototype.slice.call(JOINED_SESSIONS)));}catch(e){} }
+function markSessionJoined(id){ if(id!=null&&id!==''){ JOINED_SESSIONS.add(String(id)); saveJoinedSessions(); try{updateMySessCount();}catch(e){} } }
+function mySessionsList(){
+  var em=String(getUserEmail()||'').toLowerCase();
+  return (LIVE_SESSIONS||[]).filter(function(s){
+    return s&&(JOINED_SESSIONS.has(String(s.id))||(em&&String(s.organizerEmail||'').toLowerCase()===em));
+  });
+}
+function updateMySessCount(){ var c=document.getElementById('mySessCount'); if(c) c.textContent=mySessionsList().length; }
+function openMySessions(){ go(22); renderMySessions(); fetchLiveSessions().then(function(){ renderMySessions(); }).catch(function(){}); }
+function renderMySessions(){
+  var box=document.getElementById('mySessList'), empty=document.getElementById('mySessEmpty'); if(!box) return;
+  var em=String(getUserEmail()||'').toLowerCase();
+  var arr=mySessionsList();
+  if(!arr.length){ box.innerHTML=''; if(empty) empty.style.display='block'; return; }
+  if(empty) empty.style.display='none';
+  var h='';
+  arr.forEach(function(s){
+    var emo=SPORT_EMOJI[s.sport]||'📍', j=Number(s.joined||0), max=Number(s.maxPlayers||0);
+    var mine=em&&String(s.organizerEmail||'').toLowerCase()===em;
+    var tag=mine
+      ?'<span style="font-size:10px;font-weight:800;color:#fff;background:var(--pink);border-radius:100px;padding:2px 8px">Organisateur</span>'
+      :'<span style="font-size:10px;font-weight:800;color:#fff;background:var(--green);border-radius:100px;padding:2px 8px">Inscrit</span>';
+    h+='<div class="card" style="margin:0 16px 10px;padding:13px;display:flex;gap:11px;align-items:center">'
+      +'<div style="width:46px;height:46px;border-radius:12px;background:#ffe8f8;display:flex;align-items:center;justify-content:center;font-size:23px;flex-shrink:0">'+emo+'</div>'
+      +'<div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+escHtml(s.name||'Session')+'</div>'
+      +'<div style="font-size:12px;color:var(--g4);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">📍 '+escHtml(s.lieu||'—')+'</div>'
+      +'<div style="font-size:11px;color:var(--g3);margin-top:3px;display:flex;align-items:center;gap:6px">'+tag+'<span>'+escHtml(fmtD(s.date))+' · '+escHtml(fmtT(s.heure))+'</span></div></div>'
+      +'<div style="text-align:right;flex-shrink:0"><div style="font-size:12px;font-weight:800;color:'+(max>0&&j>=max?'#d32f2f':'var(--green)')+'">'+j+'/'+(max||'∞')+'</div></div>'
+      +'</div>';
+  });
+  box.innerHTML=h;
+}
 function createSession(){
   var name=((document.getElementById('cs_name')||{}).value||'').trim();
   var lieu=((document.getElementById('cs_lieu')||{}).value||'').trim();
@@ -2303,6 +2415,7 @@ function createSession(){
     return postSheet({action:'create',sport:csSport,name:name,lieu:lieu,lat:c.lat,lng:c.lng,date:date,heure:heure,niveau:niveau,maxPlayers:csPlayers,organizer:org,organizerEmail:getUserEmail()});
   }).then(function(res){
     if(res&&res.ok===false) throw new Error('server');
+    try{ if(res&&res.id!=null) markSessionJoined(res.id); }catch(e){}
     return fetchLiveSessions();
   }).then(function(){
     try{bumpLocalUser({sessions:1,points:20});}catch(e){}
@@ -2336,7 +2449,7 @@ function fetchLiveSessions(){
     renderLiveSessions(); return LIVE_SESSIONS;
   }).catch(function(e){ renderLiveSessions(); });
 }
-function renderLiveSessions(){ renderLiveSessionCards(); renderLiveMarkers(); }
+function renderLiveSessions(){ renderLiveSessionCards(); renderLiveMarkers(); try{updateMySessCount();}catch(e){} }
 function renderLiveSessionCards(){
   var box=document.getElementById('liveSessions'); if(!box) return;
   if(!LIVE_SESSIONS.length){ box.innerHTML=''; return; }
@@ -2371,6 +2484,7 @@ function joinLiveSession(id,btn){
     if(res&&res.ok===false) throw new Error('nf');
     if(typeof mapInstance!=='undefined'&&mapInstance) mapInstance.closePopup();
     flashToast('Inscription confirmée ! 🎉');
+    try{markSessionJoined(id);}catch(e){}
     try{bumpLocalUser({sessions:1,points:10});}catch(e){}
     return fetchLiveSessions();
   }).catch(function(e){
@@ -2808,7 +2922,7 @@ function makeSpotIcon(s){
       +'<span style="position:absolute;top:4px;left:0;width:30px;text-align:center;font-size:13px">'+(EMO[s.sport]||'\uD83D\uDCCD')+'</span></div>',
     iconSize:[30,40],iconAnchor:[15,40]});
 }
-function spotCreate(){ if(mapInstance)mapInstance.closePopup(); go(15); }
+function spotCreate(){ if(mapInstance)mapInstance.closePopup(); openCreateChoice(); }
 
 function stDot(c,sz,mr){if(sz==null)sz=9;if(mr==null)mr=6;return '<span style="display:inline-block;width:'+sz+'px;height:'+sz+'px;border-radius:50%;background:'+c+';vertical-align:middle;margin-right:'+mr+'px;flex:0 0 auto"></span>';}
 function renderSpotsList(){

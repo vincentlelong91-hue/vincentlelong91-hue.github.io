@@ -241,6 +241,10 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
           display:flex;align-items:center;justify-content:center;font-size:22px;}
 .dc-title{font-size:14px;font-weight:700;flex:1;}
 .dc-pts{font-size:12px;font-weight:700;color:var(--green);}
+.defi-tag{font-size:10px;font-weight:800;padding:3px 9px;border-radius:100px;white-space:nowrap;margin-left:auto;flex-shrink:0;}
+.defi-solo{background:#e8eeff;color:#3a5bbf;}
+.defi-social{background:#e8f8e8;color:#2d7a2d;}
+.defi-ephemere{background:#fff2e0;color:#cc7700;}
 .dc-desc{font-size:12px;color:var(--g4);margin-bottom:8px;line-height:1.5;}
 
 /* ===== PROFIL ===== */
@@ -735,30 +739,50 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
       <div class="rb-prog"><div class="rb-fill"></div></div>
       <div class="rb-progtext"><span>1240 pts</span><span>Niveau 5 → 2000 pts</span></div>
     </div>
-    <div class="sec-hd">Défis en cours</div>
-    <div class="defi-card" onclick="go(7)">
-      <div class="dc-top"><div class="dc-icon">🔥</div><div><div class="dc-title">Série de 7 sessions</div><div class="dc-pts">+500 pts</div></div></div>
-      <div class="dc-desc">Participe à 7 sessions cette semaine sans interruption.</div>
-      <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;font-weight:600">5 / 7 sessions</span><span style="font-size:12px;color:var(--g3)">2 jours restants</span></div>
-      <div class="pbar"><div class="pfill" style="width:71%"></div></div>
+    <div class="sf-bar" id="defiFilters">
+      <div class="sf-pill act" data-cat="all" onclick="filterDefis('all',this)">Tout</div>
+      <div class="sf-pill" data-cat="solo" onclick="filterDefis('solo',this)">🧍 Solo</div>
+      <div class="sf-pill" data-cat="social" onclick="filterDefis('social',this)">👥 Social</div>
+      <div class="sf-pill" data-cat="ephemere" onclick="filterDefis('ephemere',this)">⏳ Éphémère</div>
     </div>
-    <div class="defi-card" onclick="go(7)">
-      <div class="dc-top"><div class="dc-icon">⚽</div><div><div class="dc-title">Explorateur de sports</div><div class="dc-pts">+300 pts</div></div></div>
-      <div class="dc-desc">Pratique 3 sports différents ce mois-ci.</div>
-      <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;font-weight:600">2 / 3 sports</span><span style="font-size:12px;color:var(--g3)">Football, Basket ✓</span></div>
-      <div class="pbar"><div class="pfill" style="width:67%"></div></div>
+    <div class="sec-hd" id="defiSecHd">Défis en cours</div>
+    <div id="defiList">
+      <div class="defi-card" data-cat="solo" onclick="go(7)">
+        <div class="dc-top"><div class="dc-icon">🔥</div><div><div class="dc-title">La série</div><div class="dc-pts">+500 pts</div></div><span class="defi-tag defi-solo">Solo</span></div>
+        <div class="dc-desc">Enchaîne 7 sessions sans interruption.</div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;font-weight:600">5 / 7 sessions</span><span style="font-size:12px;color:var(--g3)">2 jours restants</span></div>
+        <div class="pbar"><div class="pfill" style="width:71%"></div></div>
+      </div>
+      <div class="defi-card" data-cat="solo" onclick="go(7)">
+        <div class="dc-top"><div class="dc-icon">🗺️</div><div><div class="dc-title">Tour des spots</div><div class="dc-pts">+400 pts</div></div><span class="defi-tag defi-solo">Solo</span></div>
+        <div class="dc-desc">Visite 5 spots différents à Bordeaux.</div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;font-weight:600">3 / 5 spots</span><span style="font-size:12px;color:var(--g3)">Victoire, Chartrons ✓</span></div>
+        <div class="pbar"><div class="pfill" style="width:60%"></div></div>
+      </div>
+      <div class="defi-card" data-cat="ephemere" onclick="go(7)">
+        <div class="dc-top"><div class="dc-icon">📅</div><div><div class="dc-title">Mon mois actif</div><div class="dc-pts">+600 pts</div></div><span class="defi-tag defi-ephemere">Éphémère</span></div>
+        <div class="dc-desc">Sois actif au moins 15 jours ce mois-ci.</div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;font-weight:600">9 / 15 jours</span><span style="font-size:12px;color:var(--g3)">Juillet</span></div>
+        <div class="pbar"><div class="pfill" style="width:60%"></div></div>
+      </div>
+      <div class="defi-card" data-cat="ephemere" onclick="go(7)">
+        <div class="dc-top"><div class="dc-icon">⚡</div><div><div class="dc-title">Défi du week-end</div><div class="dc-pts">+150 pts</div></div><span class="defi-tag defi-ephemere">Éphémère</span></div>
+        <div class="dc-desc">Fais 2 sessions ce week-end.</div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;font-weight:600">1 / 2 sessions</span><span style="font-size:12px;color:var(--g3)">Se termine dimanche</span></div>
+        <div class="pbar"><div class="pfill" style="width:50%"></div></div>
+      </div>
+      <div class="defi-card" data-cat="social" onclick="go(17)">
+        <div class="dc-top"><div class="dc-icon" style="background:#e8f8e8">🤝</div><div><div class="dc-title">Invite un ami</div><div class="dc-pts">+250 pts</div></div><span class="defi-tag defi-social">Social</span></div>
+        <div class="dc-desc">Parraine un ami qui crée son compte AGGÓ.</div>
+        <button class="btn" style="width:100%;height:40px;font-size:13px;margin-top:4px;background:var(--lime);color:#000" onclick="event.stopPropagation();go(17)">Inviter un ami</button>
+      </div>
+      <div class="defi-card" data-cat="social" onclick="go(7)" style="border-color:var(--pink)">
+        <div class="dc-top"><div class="dc-icon" style="background:#ffe8f8">🏢</div><div><div class="dc-title">Challenge Entreprise Q2</div><div class="dc-pts" style="color:var(--pink)">Trophée Équipe</div></div><span class="defi-tag defi-social">Social</span></div>
+        <div class="dc-desc">Ton équipe mène avec 4 680 pts. Prochain défi vendredi 12h.</div>
+        <button class="btn btn-pink" style="width:100%;height:40px;font-size:13px;margin-top:4px" onclick="event.stopPropagation();openChallengeEntreprise()">Voir le classement</button>
+      </div>
     </div>
-    <div class="defi-card" onclick="go(7)" style="border-color:var(--pink)">
-      <div class="dc-top"><div class="dc-icon" style="background:#ffe8f8">🏢</div><div><div class="dc-title">Challenge Entreprise Q2</div><div class="dc-pts" style="color:var(--pink)">Trophée Équipe</div></div></div>
-      <div class="dc-desc">Ton équipe mène avec 4 680 pts. Prochain défi vendredi 12h.</div>
-      <button class="btn btn-pink" style="width:100%;height:40px;font-size:13px;margin-top:4px" onclick="event.stopPropagation();openChallengeEntreprise()">Voir le classement</button>
-    </div>
-    <div class="sec-hd" style="margin-top:4px">À débloquer</div>
-    <div class="defi-card" style="opacity:.5">
-      <div class="dc-top"><div class="dc-icon">🎯</div><div><div class="dc-title">Sniper (Tennis)</div><div class="dc-pts">+200 pts</div></div></div>
-      <div class="dc-desc">Gagne 3 matchs de tennis consécutifs.</div>
-      <div class="tag" style="background:var(--g2)">🔒 Niveau 5 requis</div>
-    </div>
+    <div id="defiEmpty" style="display:none;padding:36px 24px;text-align:center;color:var(--g3)"><div style="font-size:36px;margin-bottom:8px">🎯</div><div style="font-size:14px;font-weight:700;color:#000">Aucun défi dans cette catégorie</div></div>
     <div style="height:100px"></div>
   </div>
   <div class="bnav">
@@ -2362,6 +2386,22 @@ function applyCreateMode(mode){
   if(solo){ csPlayers=1; }
   else { csPlayers=10; var v=document.getElementById('csPlayersVal'); if(v) v.textContent='10'; }
   var sub=document.getElementById('cs_submit'); if(sub) sub.textContent=solo?'Créer ma séance 🚀':'Créer la session 🚀';
+}
+
+// ===== Filtres des défis (tout / solo / social / éphémère) =====
+function filterDefis(cat,el){
+  var pills=document.querySelectorAll('#defiFilters .sf-pill');
+  Array.prototype.forEach.call(pills,function(p){ p.classList.remove('act'); });
+  if(el) el.classList.add('act');
+  var cards=document.querySelectorAll('#defiList .defi-card'), shown=0;
+  Array.prototype.forEach.call(cards,function(c){
+    var ok=(cat==='all'||c.getAttribute('data-cat')===cat);
+    c.style.display=ok?'':'none';
+    if(ok) shown++;
+  });
+  var hd=document.getElementById('defiSecHd');
+  if(hd) hd.textContent=(cat==='all')?'Défis en cours':({solo:'Défis solo',social:'Défis sociaux',ephemere:'Défis éphémères'}[cat]||'Défis');
+  var emp=document.getElementById('defiEmpty'); if(emp) emp.style.display=shown?'none':'block';
 }
 
 // ===== Mes sessions (inscrites + créées) =====

@@ -62,7 +62,7 @@ The bottom nav bar (with active-state styling) is duplicated inside each tab scr
 ### Map (s1)
 
 - Leaflet.js via CDN. Stored in `mapInstance` (lazy init on first entry to s1).
-- Tiles: CartoDB `light_all` — free, no API key required.
+- Tiles: OpenStreetMap standard tiles (no API key), greyed via a CSS filter on `.leaflet-tile-pane`; attribution shown top-right. CartoDB `light_all` was dropped because it now returns "API KEY REQUIRED" tiles.
 - Only `SPOTS` are plotted as markers (sessions were removed from the map). Clicking a marker calls `openSpot(i)`.
 - Custom SVG pin icons per sport colour: `makeSpotIcon(s)` and `makeUserIcon()`.
 - Search uses the public Nominatim geocoding API (`nominatim.openstreetmap.org`). `geocode(q, flyFirst)` fetches results; `flyToPlace(i)` pans the map.

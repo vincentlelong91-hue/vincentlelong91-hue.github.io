@@ -95,7 +95,8 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
 
 /* ===== LEAFLET overrides ===== */
 .leaflet-container{font-family:'DM Sans',sans-serif;}
-.leaflet-control-attribution{display:none;}
+.leaflet-control-attribution{font-size:9px;background:rgba(255,255,255,.7)!important;padding:0 4px;margin:122px 8px 0 0!important;border-radius:4px;}
+.leaflet-tile-pane{filter:grayscale(.85) brightness(1.06) contrast(.92);}
 .leaflet-control-zoom{display:none;}
 
 /* ===== SPLASH ===== */
@@ -2326,7 +2327,7 @@ function obNext1(){
   var p=obVal('ob_prenom').trim(), em=obVal('ob_email').trim(), mp=obVal('ob_mdp');
   if(!p){ flashToast('Indique ton prénom'); return; }
   if(em.indexOf('@')<1){ flashToast('Email invalide'); return; }
-  if(mp.length<4){ flashToast('Mot de passe trop court (min. 4)'); return; }
+  if(mp.length<8){ flashToast('Mot de passe trop court (min. 8)'); return; }
   go(9);
 }
 function obAcceptCGU(){
@@ -2471,7 +2472,7 @@ function createSession(){
 // ===== SESSIONS EN DIRECT (Google Sheets) =====
 var SHEET_API='https://script.google.com/macros/s/AKfycbzOFKMNpXwWAxUjozxclUPdWN4Q5GlpY72zjCLE5fJOBPeHyqgUpeW6AO4frPmimjqBLw/exec';
 var LIVE_SESSIONS=[], liveMarkers=[];
-var SPORT_EMOJI={football:'⚽',basket:'🏀',tennis:'🎾',skate:'🛹',badminton:'🏸',muscu:'💪',running:'🏃',velo:'🚴',natation:'🏊',boxe:'🥊',yoga:'🧘'};
+var SPORT_EMOJI={football:'⚽',foot:'⚽',basket:'🏀',tennis:'🎾',skate:'🛹',badminton:'🏸',muscu:'💪',running:'🏃',velo:'🚴',natation:'🏊',boxe:'🥊',yoga:'🧘'};
 function escHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function fmtD(v){ if(v==null||v==='') return ''; v=String(v); if(/^\d{4}-\d{2}-\d{2}T/.test(v)){ var d=new Date(v); if(!isNaN(d)) return d.toLocaleDateString('fr-FR',{timeZone:'Europe/Paris',day:'2-digit',month:'2-digit'}); } var ymd=v.match(/^(\d{4})-(\d{2})-(\d{2})/); if(ymd) return ymd[3]+'/'+ymd[2]; return v.length>10?v.slice(0,10):v; }
 function fmtT(v){ if(v==null||v==='') return ''; v=String(v); if(/T\d{2}:\d{2}/.test(v)){ var d=new Date(v); if(!isNaN(d)) return d.toLocaleTimeString('fr-FR',{timeZone:'Europe/Paris',hour:'2-digit',minute:'2-digit'}).replace(':','h'); } var hm=v.match(/^(\d{1,2})[:hH](\d{2})/); if(hm) return (hm[1].length<2?'0'+hm[1]:hm[1])+'h'+hm[2]; return v; }
@@ -3112,10 +3113,12 @@ function initMap(){
     dragging:true,touchZoom:true,scrollWheelZoom:true,doubleClickZoom:true,
   });
 
-  // CartoDB light tiles — free, no API key
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
+  // Fond OpenStreetMap — gratuit, sans clé API (CARTO exige désormais une clé)
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
     maxZoom:19,
+    attribution:'© OpenStreetMap',
   }).addTo(mapInstance);
+  L.control.attribution({position:'topright',prefix:false}).addTo(mapInstance);
 
   const bounds = [];
   // Spots uniquement sur la carte (sessions retirées)
